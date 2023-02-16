@@ -21,19 +21,23 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 //Get all users
-Route::get('users', 'UserController@index');
+Route::get('users', 'Admin\UserController@index');
 
 
 //Get one user
-Route::get('users/{id}', 'UserController@show');
+Route::get('users/{id}', 'Admin\UserController@show');
 
 // Create a user
-Route::post('users', 'UserCOntroller@store');
+Route::post('users', 'Admin\UserController@store');
 
 
 //Update a user
-Route::get('users/{id}', 'UserController@upadte');
+Route::get('users/{id}', 'Admin\UserController@upadte');
 
 
 //Delete a user
-Route::get('users/{id}', 'UserCOntroller@delete');
+Route::get('users/{id}', 'Admin\UserController@delete');
+
+
+//Registered new user
+Route::post('register', 'Auth\RegisterController@register');
