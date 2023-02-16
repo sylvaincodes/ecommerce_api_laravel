@@ -39,5 +39,8 @@ Route::get('users/{id}', 'Admin\UserController@upadte');
 Route::get('users/{id}', 'Admin\UserController@delete');
 
 
-//Registered new user
+//Registered user endpoint
 Route::post('register', 'Auth\RegisterController@register');
+
+//Login user end point
+Route::post('login', 'Auth\LoginController@login');

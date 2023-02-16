@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Nette\Utils\Random;
 
 class User extends Authenticatable
 {
@@ -56,7 +57,7 @@ class User extends Authenticatable
 
     public function generateToken()
     {
-        $this->api_token = str_random(60);
+        $this->api_token = Random::generate(60);
         $this->save();
 
         return $this->api_token;
