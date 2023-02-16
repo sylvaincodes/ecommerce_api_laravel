@@ -16,7 +16,13 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+       'email',
+       'password',
+       'first_name',
+       'last_name',
+       'username',
+       'avatar_id',
+       'permissions',
     ];
 
     /**
@@ -34,6 +40,17 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'permissions' => 'json',
+    ];
+
+
+     /**
+     * The date fields for the model.clear
+     *
+     * @var array
+     */
+    protected $dates = [
+        'created_at',
+        'updated_at',
     ];
 }
