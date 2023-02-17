@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Auth;
 
 class LoginController extends Controller
 {
@@ -44,7 +45,10 @@ class LoginController extends Controller
         $this->validateLogin($request);
 
         if ($this->attemptLogin($request)) {
+
+
             $user = $this->guard()->user();
+
             $user->generateToken();
 
             return response()->json([
@@ -54,4 +58,21 @@ class LoginController extends Controller
 
         return $this->sendFailedLoginResponse($request);
     }
+
+
+    public function logout(Request $request)
+    {
+        $user = Auth::guard('api')->user();
+        if ($user) {
+            $user->api_token = null;
+            $user->save();
+        }
+        return response()->json(['data' => $user], 200);
+    }
+
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        return response()->json(['error' => 'Unauthenticated'], 401);
+    }
+
 }
