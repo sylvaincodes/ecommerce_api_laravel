@@ -13,9 +13,10 @@ class UserController extends Controller
         return User::all();
     }
  
-    public function show(User $user)
+    public function show($id)
     {
-        return $user;
+        die("ok");
+        return response()->json(User::find($id), 201);
     }
 
     public function store(Request $request)
@@ -27,7 +28,6 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $user->update($request->all());
-
         return response()->json($user, 200);
     }
 

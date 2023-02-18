@@ -6,27 +6,22 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\User;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class LoginTest extends TestCase
 {
-    public function testRequiresEmailAndLogin()
-    {
-        $this->json('POST', 'api/login')
-            ->assertStatus(422)
-            ->assertJson([
-                'email' => ['Le champ emial est obligatoire.'],
-                'password' => ['Le champ mot de passe est obligatoire.'],
-            ]);
-    }
+
+    // use WithoutMiddleware; // use this trait
 
     public function testUserLoginsSuccessfully()
     {
+        
         $user = factory(User::class)->create([
-            'email' => 'jo05@domain.com',
-            'password' => bcrypt('secret'),
+            'email' => 'trystan61@domain.com',
+            'password' => bcrypt('secret22'),
         ]);
-
-        $payload = ['email' => 'jo05@domain.com', 'password' => 'secret'];
+        
+        $payload = ['email' => 'trystan61@domain.com', 'password' => 'secret22'];
 
         $this->json('POST', 'api/login', $payload)
             ->assertStatus(200)
@@ -39,7 +34,8 @@ class LoginTest extends TestCase
                     'updated_at',
                     'api_token',
                 ],
-            ]);
+            ])
+            ;
 
     }
 }

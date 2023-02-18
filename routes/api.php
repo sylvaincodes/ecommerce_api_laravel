@@ -16,11 +16,6 @@ use PhpParser\Node\Scalar\MagicConst\Function_;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-
 Route::group(['middleware' => 'auth:api'], function () {
 
     //Get all users
@@ -32,14 +27,12 @@ Route::group(['middleware' => 'auth:api'], function () {
     // Create a user
     Route::post('users', 'Admin\UserController@store');
 
-
     //Update a user
-    Route::get('users/{id}', 'Admin\UserController@upadte');
-
-
+    Route::put('users/update/{id}', 'Admin\UserController@update')->name('users.update');
+    
     //Delete a user
-    Route::get('users/{id}', 'Admin\UserController@delete');
-
+    Route::delete('users/delete', 'Admin\UserController@delete')->name('users.delete');;
+    
 });
 
 //Registered user endpoint

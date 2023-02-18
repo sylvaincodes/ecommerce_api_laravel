@@ -25,7 +25,7 @@ class UsersTableSeeder extends Seeder
             
             User::create(  [
                 'email' => preg_replace('/@example\..*/', '@domain.com', $faker->unique()->safeEmail),
-                'password' => $password ?: $password = bcrypt('secret'),
+                'password' => $password ?: $password = bcrypt('secret22'),
                 'first_name' => $faker->firstName(),
                 'last_name' => $faker->lastName(),
                 'username'  => $faker->firstName(),
