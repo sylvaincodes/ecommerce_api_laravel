@@ -16,6 +16,10 @@ use PhpParser\Node\Scalar\MagicConst\Function_;
 |
 */
 
+Route::group(['middleware' => ['cors', 'json.response']], function () {
+    // ...
+});
+
 Route::group(['middleware' => 'auth:api'], function () {
 
     //Get all users
