@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Categorie;
 
 class CategorieController extends Controller
 {
@@ -14,17 +15,8 @@ class CategorieController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $categorie = Categorie::all();
+        return response()->json($categorie, 200);
     }
 
     /**
@@ -35,7 +27,8 @@ class CategorieController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $categorie=Categorie::create($request->all());
+        return response()->json($categorie, 201);
     }
 
     /**
@@ -46,18 +39,7 @@ class CategorieController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return response()->json(Categorie::find($id), 201);
     }
 
     /**
@@ -69,7 +51,9 @@ class CategorieController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $categorie = Categorie::find($id);
+        $categorie->update($request->all());
+        return response()->json([ "data" => $categorie ], 200);
     }
 
     /**
@@ -80,6 +64,8 @@ class CategorieController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $categorie = Categorie::find($id);
+        $categorie->delete();
+        return response()->json($categorie, 204);
     }
 }

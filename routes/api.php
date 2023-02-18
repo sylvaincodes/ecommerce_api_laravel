@@ -17,34 +17,24 @@ use PhpParser\Node\Scalar\MagicConst\Function_;
 */
 
 Route::group(['middleware' => ['cors', 'json.response']], function () {
-    // ...
+
+    // public routes
+    Route::post('/login', 'Auth\ApiAuthController@login')->name('login.api');
+    Route::post('/register', 'Auth\ApiAuthController@register')->name('register.api');
+
+    // our routes to be protected will go in here
+    Route::middleware('auth:api')->group(function () {
+
+        Route::post('/logout', 'Auth\ApiAuthController@logout')->name('logout.api');
+
+        Route::get('/users', 'Admin\UserController@index');
+        Route::get('/users/{id}', 'Admin\UserController@show');
+        Route::post('/users', 'Admin\UserController@store');
+        Route::put('/users/{id}', 'Admin\UserController@update');
+        Route::delete('/users/{id}', 'Admin\UserController@delete');
+
+        Route::apiResource("categories", Admin\CategorieController::class)->only(['index','show','update','destroy','store']);
+
+    });
+
 });
-
-Route::group(['middleware' => 'auth:api'], function () {
-
-    //Get all users
-    Route::get('users', 'Admin\UserController@index');
-
-    //Get one user
-    Route::get('users/{id}', 'Admin\UserController@show');
-
-    // Create a user
-    Route::post('users', 'Admin\UserController@store');
-
-    //Update a user
-    Route::put('users/update/{id}', 'Admin\UserController@update')->name('users.update');
-    
-    //Delete a user
-    Route::delete('users/delete', 'Admin\UserController@delete')->name('users.delete');;
-    
-});
-
-//Registered user endpoint
-Route::post('register', 'Auth\RegisterController@register');
-
-
-//Login user end point
-Route::post('login', 'Auth\LoginController@login');
-
-
-Route::post('logout', 'Auth\LoginController@logout');

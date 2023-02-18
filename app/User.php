@@ -7,11 +7,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Nette\Utils\Random;
 use Illuminate\Database\Eloquent\Factory;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable;
-
+    use HasApiTokens, Notifiable;
     /**
      * The attributes that are mass assignable.
      *
