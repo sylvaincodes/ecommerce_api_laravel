@@ -18,22 +18,29 @@ use PhpParser\Node\Scalar\MagicConst\Function_;
 
 Route::group(['middleware' => ['cors', 'json.response']], function () {
 
-    // public routes
+    // routes publiques
     Route::post('/login', 'Auth\ApiAuthController@login')->name('login.api');
     Route::post('/register', 'Auth\ApiAuthController@register')->name('register.api');
 
-    // our routes to be protected will go in here
+    // routes protégées
     Route::middleware('auth:api')->group(function () {
 
+        // Routes pour tous y compris les clients
         Route::post('/logout', 'Auth\ApiAuthController@logout')->name('logout.api');
 
-        Route::get('/users', 'Admin\UserController@index');
-        Route::get('/users/{id}', 'Admin\UserController@show');
-        Route::post('/users', 'Admin\UserController@store');
-        Route::put('/users/{id}', 'Admin\UserController@update');
-        Route::delete('/users/{id}', 'Admin\UserController@delete');
-
-        Route::apiResource("categories", Admin\CategorieController::class)->only(['index','show','update','destroy','store']);
+        // Routes Administrateur
+        Route::group(['middleware' => ['api.admin']], function () {
+            Route::get('/users', 'Admin\UserController@index')->middleware("api.admin");
+            Route::get('/users/{id}', 'Admin\UserController@show')->middleware("api.admin");
+            Route::apiResource("categories", Admin\CategorieController::class)->only(['index','show','update','destroy','store']);
+        });
+        
+        // Routes Super Administrateur
+        Route::group(['middleware' => ['api.superAdmin']], function () {
+            Route::post('/users', 'Admin\UserController@store');
+            Route::put('/users/{id}', 'Admin\UserController@update');
+            Route::delete('/users/{id}', 'Admin\UserController@delete');
+        });
 
     });
 
