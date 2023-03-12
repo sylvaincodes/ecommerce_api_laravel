@@ -30,15 +30,18 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
 
         // Routes Administrateur
         Route::group(['middleware' => ['api.admin']], function () {
-            Route::get('/users', 'Admin\UserController@index')->middleware("api.admin");
-            Route::get('/users/{id}', 'Admin\UserController@show')->middleware("api.admin");
+            Route::get('/users', 'Admin\UserController@index');
+            Route::get('/users/{id}', 'Admin\UserController@show');
             Route::apiResource("categories", Admin\CategorieController::class)->only(['index','show','update','destroy','store']);
+            Route::apiResource("products", Admin\ProductController::class)->only(['index','show','update','destroy','store']);
+            Route::get('/search/products', 'Admin\ProductController@search');
+            
         });
         
         // Routes Super Administrateur
         Route::group(['middleware' => ['api.superAdmin']], function () {
             Route::post('/users', 'Admin\UserController@store');
-            Route::put('/users/{id}', 'Admin\UserController@update');
+            Route::any('/users/{id}', 'Admin\UserController@update');
             Route::delete('/users/{id}', 'Admin\UserController@delete');
         });
 

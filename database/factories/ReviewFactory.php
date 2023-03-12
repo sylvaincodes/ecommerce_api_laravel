@@ -2,9 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Categorie;
 use Faker\Generator as Faker;
-use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,11 +15,12 @@ use Illuminate\Support\Str;
 |
 */
 
-$factory->define(App\Models\Categorie::class, function (Faker $faker) {
-
+$factory->define(App\Models\Review::class, function (Faker $faker) {
     return [
-        'name' => $faker->firstName(),
-        'description' => $faker->text(100),
-        'status' => 'published'
+        'customer_id' => 1,
+        'product_id' => 1,
+        'star' => $faker->randomElement(['1' , '2', '3', '4', '5']),
+        'status' => 'published',
+        'comment' => $faker->text(100),
     ];
 });

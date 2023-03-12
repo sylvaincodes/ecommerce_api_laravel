@@ -2,7 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Categorie;
+use App\Models\Brand;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
@@ -17,7 +17,7 @@ use Illuminate\Support\Str;
 |
 */
 
-$factory->define(App\Models\Categorie::class, function (Faker $faker) {
+$factory->define(App\Models\Brand::class, function (Faker $faker) {
 
     return [
         'name' => $faker->firstName(),

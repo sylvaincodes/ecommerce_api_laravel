@@ -16,7 +16,7 @@ class UsersTableSeeder extends Seeder
 
         Static $password;
         //Let's truncate our last records
-        User::truncate();
+        // User::truncate();
 
         $faker = \Faker\Factory::create();
 
