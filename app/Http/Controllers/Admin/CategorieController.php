@@ -72,8 +72,7 @@ class CategorieController extends Controller
             
          
         $category = Categorie::create($request->all());
-        $category_ = Categorie::find($category->id);
-        $response = ['category' => $category_,'status' => 201];
+        $response = ['category' => $category,'status' => 201];
         return response()->json($response, 201);
 
     }

@@ -21,6 +21,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     // routes publiques
     Route::post('/login', 'Auth\ApiAuthController@login')->name('login.api');
     Route::post('/register', 'Auth\ApiAuthController@register')->name('register.api');
+    Route::apiResource("categories", Admin\CategorieController::class)->only(['index']);
 
     // routes protégées
     Route::middleware('auth:api')->group(function () {
@@ -28,11 +29,12 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
         // Routes pour tous y compris les clients
         Route::post('/logout', 'Auth\ApiAuthController@logout')->name('logout.api');
 
+
         // Routes Administrateur
         Route::group(['middleware' => ['api.admin']], function () {
             Route::get('/users', 'Admin\UserController@index');
             Route::get('/users/{id}', 'Admin\UserController@show');
-            Route::apiResource("categories", Admin\CategorieController::class)->only(['index','show','update','destroy','store']);
+            Route::apiResource("categories", Admin\CategorieController::class)->only(['show','update','destroy','store']);
             Route::apiResource("products", Admin\ProductController::class)->only(['index','show','update','destroy','store']);
             Route::get('/search/products', 'Admin\ProductController@search');
             
