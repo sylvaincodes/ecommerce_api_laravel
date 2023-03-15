@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class StoreCategorieRequest extends FormRequest
+class UpdateSlideRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,16 +24,12 @@ class StoreCategorieRequest extends FormRequest
      */
     public function rules()
     {
+        $slide= $this->route('slide');
         return [
-            'name'=> 'required|string|max:191|unique',
-            'description'=> 'required|string|max:191',
-            'parent_id'=> 'nullable|numeric|max:10',
-            'order'=> 'nullable|numeric|max:10',
-            'is_default'=> 'nullable|max:2',
-            'is_featured'=> 'nullable|max:2',
-            'image'=> 'nullable',
-            'status'=> 'required|nullable',
-            'icon'=> 'nullable|max:20',
+            'name'=> 'required|string|max:191',Rule::unique('slides')->ignore($slide->id),
+            'description'=> 'nullable|string|max:191',
+            'key'=> 'required|string|max:20',Rule::unique('slides')->ignore($slide->id),
+            'status'=> 'required|string|max:30',
         ];
     }
 
@@ -44,8 +41,10 @@ class StoreCategorieRequest extends FormRequest
     public function attributes()
     {
         return [
-            'title'=> 'Nom',
+            'name'=> 'Nom',
+            'key'=> 'Clé',
             'description'=> 'Description',
+            'status'=> 'Status',
         ];
     }
 

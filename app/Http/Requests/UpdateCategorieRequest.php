@@ -28,8 +28,8 @@ class UpdateCategorieRequest extends FormRequest
     {
         $id= $this->route('id');
         return [
-            'name'=> 'required|string|max:255',
-            'description'=> 'required|string|max:255',
+            'name'=> 'required|string|max:191',Rule::unique('categories')->ignore($id),
+            'description'=> 'required|string|max:191',
             'parent_id'=> 'nullable|numeric|max:10',
             'order'=> 'nullable|numeric|max:10',
             'is_default'=> 'nullable|max:2',

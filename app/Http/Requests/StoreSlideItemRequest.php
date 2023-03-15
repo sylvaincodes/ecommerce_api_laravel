@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCategorieRequest extends FormRequest
+class StoreSlideItemRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +24,15 @@ class StoreCategorieRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=> 'required|string|max:191|unique',
-            'description'=> 'required|string|max:191',
-            'parent_id'=> 'nullable|numeric|max:10',
-            'order'=> 'nullable|numeric|max:10',
-            'is_default'=> 'nullable|max:2',
-            'is_featured'=> 'nullable|max:2',
+            'slide_id'=> 'required|max:191',
             'image'=> 'nullable',
-            'status'=> 'required|nullable',
-            'icon'=> 'nullable|max:20',
+            'title'=> 'required|max:191|unique:slides_items',
+            'description'=> 'required|max:191',
+            'btn'=> 'nullable|max:191',
+            'link'=> 'nullable|max:50',
+            'order'=> 'nullable|max:30',
+            'image_url'=> 'nullable',
+            'subtitle'=> 'nullable|max:191',
         ];
     }
 
@@ -44,8 +44,10 @@ class StoreCategorieRequest extends FormRequest
     public function attributes()
     {
         return [
-            'title'=> 'Nom',
+            'name'=> 'Nom',
+            'key'=> 'Clé',
             'description'=> 'Description',
+            'status'=> 'Status',
         ];
     }
 

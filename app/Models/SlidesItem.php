@@ -4,27 +4,25 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Categorie extends Model
+class SlidesItem extends Model
 {
 
-    /**
+    public $table = 'slides_items';
+      /**
      * The attributes that are mass assignable.
      *
      * @var array
-     */
+     */ 
     protected $fillable = [
-       'name',
-       'parent_id',
-       'description',
-       'status',
-       'author_type',
-       'icon',
-       'order',
-       'is_featured',
-       'is_default',
-       'image',
-       'image_url',
-       'link'
+        'slide_id',
+        'image',
+        'title',
+        'description',
+        'btn',
+        'link',
+        'order',
+        'url',
+        'subtitle'
     ];
 
     /**
@@ -45,7 +43,6 @@ class Categorie extends Model
         
     ];
 
-
      /**
      * The date fields for the model.clear
      *
@@ -55,6 +52,4 @@ class Categorie extends Model
         'created_at',
         'updated_at',
     ];
-
-   
 }

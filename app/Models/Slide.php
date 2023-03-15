@@ -4,27 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Categorie extends Model
+class Slide extends Model
 {
-
-    /**
+       /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-       'name',
-       'parent_id',
-       'description',
-       'status',
-       'author_type',
-       'icon',
-       'order',
-       'is_featured',
-       'is_default',
-       'image',
-       'image_url',
-       'link'
+        'name',
+        'key',
+        'description',
+        'status',
+        'order'
     ];
 
     /**
@@ -56,5 +48,4 @@ class Categorie extends Model
         'updated_at',
     ];
 
-   
 }

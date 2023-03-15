@@ -22,13 +22,14 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::post('/login', 'Auth\ApiAuthController@login')->name('login.api');
     Route::post('/register', 'Auth\ApiAuthController@register')->name('register.api');
     Route::apiResource("categories", Admin\CategorieController::class)->only(['index']);
+    Route::apiResource("slidesitems", Admin\SlidesItemController::class)->only(['index']);
+    Route::apiResource("slides", Admin\SlideController::class)->only(['index']);
 
     // routes protégées
     Route::middleware('auth:api')->group(function () {
 
         // Routes pour tous y compris les clients
         Route::post('/logout', 'Auth\ApiAuthController@logout')->name('logout.api');
-
 
         // Routes Administrateur
         Route::group(['middleware' => ['api.admin']], function () {
@@ -37,7 +38,10 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::apiResource("categories", Admin\CategorieController::class)->only(['show','update','destroy','store']);
             Route::apiResource("products", Admin\ProductController::class)->only(['index','show','update','destroy','store']);
             Route::get('/search/products', 'Admin\ProductController@search');
-            
+            Route::apiResource("slidesitems", Admin\SlidesItemController::class)->only(['show','update','destroy','store']);
+            Route::apiResource("slides", Admin\SlideController::class)->only(['show','update','destroy','store']);
+            Route::apiResource("product_attributes", Admin\ProductAttributeController::class)->only(['index','show','update','destroy','store']);
+            Route::apiResource("product_attribute_items", Admin\ProductAttributeItemController::class)->only(['index','show','update','destroy','store']);
         });
         
         // Routes Super Administrateur
