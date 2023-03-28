@@ -22,6 +22,8 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::post('/login', 'Auth\ApiAuthController@login')->name('login.api');
     Route::post('/register', 'Auth\ApiAuthController@register')->name('register.api');
     Route::apiResource("categories", Admin\CategorieController::class)->only(['index']);
+    Route::apiResource("brands", Admin\BrandController::class)->only(['index']);
+    Route::apiResource("collections", Admin\CollectionController::class)->only(['index']);
     Route::apiResource("slidesitems", Admin\SlidesItemController::class)->only(['index']);
     Route::apiResource("slides", Admin\SlideController::class)->only(['index']);
 
@@ -37,6 +39,8 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::get('/users/{id}', 'Admin\UserController@show');
             Route::apiResource("categories", Admin\CategorieController::class)->only(['show','update','destroy','store']);
             Route::apiResource("products", Admin\ProductController::class)->only(['index','show','update','destroy','store']);
+            Route::apiResource("brands", Admin\BrandController::class)->only(['show','update','destroy','store']);
+            Route::apiResource("collections", Admin\CollectionController::class)->only(['show','update','destroy','store']);
             Route::get('/search/products', 'Admin\ProductController@search');
             Route::apiResource("slidesitems", Admin\SlidesItemController::class)->only(['show','update','destroy','store']);
             Route::apiResource("slides", Admin\SlideController::class)->only(['show','update','destroy','store']);

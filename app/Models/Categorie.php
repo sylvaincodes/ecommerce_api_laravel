@@ -23,7 +23,7 @@ class Categorie extends Model
        'is_featured',
        'is_default',
        'image',
-       'image_url',
+       'url',
        'link'
     ];
 

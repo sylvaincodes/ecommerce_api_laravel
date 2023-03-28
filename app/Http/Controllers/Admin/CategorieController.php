@@ -47,30 +47,18 @@ class CategorieController extends Controller
     public function store(StoreCategorieRequest $request)
     {
         $validated = $request->validated();
-        foreach ($request->except('_token') as $colum => $value) {
-            if ($value=="on") {
-                 $request->merge([
-                     $colum => 1
-                 ]);
-             }elseif ($value=="off"){
-                $request->merge([
-                    $colum => 0
-                ]);
-             }else {
-                # code...
-             }
-         }
-    
-         if (isset($request->image)) {
-             
-            $img_name=$request->name.'.jpg';
-            //  $request->file->move(public_path('uploads'),$img_name);
-             $request->merge([
-                'image'=> $img_name
-             ]);
+        if($request->image){
+            $request->merge([
+                'image'=> ""
+            ]);
+        } 
+        
+        if($request->url){
+            $request->merge([
+                'url'=> $request->url   
+            ]);
         }
-            
-         
+                    
         $category = Categorie::create($request->all());
         $response = ['category' => $category,'status' => 201];
         return response()->json($response, 201);
@@ -85,32 +73,19 @@ class CategorieController extends Controller
      */
     public function update(UpdateCategorieRequest $request, $id)
     {
-
         $validated = $request->validated();
-        foreach ($request->except('_token') as $colum => $value) {
-            if ($value=="on") {
-                 $request->merge([
-                     $colum => 1
-                 ]);
-             }elseif ($value=="off"){
-                $request->merge([
-                    $colum => 0
-                ]);
-             }else {
-                # code...
-             }
-         }
-    
-         if (isset($request->image)) {
-             
-            $img_name=$request->name.'.jpg';
-            //  $request->file->move(public_path('uploads'),$img_name);
-             $request->merge([
-                'image'=> $img_name
-             ]);
+        if($request->image){
+            $request->merge([
+                'image'=> ""
+            ]);
+        } 
+        
+        if($request->url){
+            $request->merge([
+                'url'=> $request->url   
+            ]);
         }
             
-
         $category = Categorie::find($id);
         $category->update($request->all());
         $response = ['category' => $category, 'status' => 200];

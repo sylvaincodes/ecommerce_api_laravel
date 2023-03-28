@@ -27,7 +27,9 @@ class ProductController extends Controller
     public function index()
     {
         $products = $this->ProductRepository->getAllProducts();
-        return response()->json($products, 200);
+
+        $response = ['data' => $products, 'status' => 201];
+        return response()->json($response, 200);
     }
 
     public function show($id)
@@ -37,16 +39,55 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+
+        if($request->images){
+                $request->merge([
+                    'images'=> ""
+                ]);
+        }
+        
+        if($request->url){
+            
+            $string = "";
+            foreach ($request->url as $key => $row) {
+
+                $string .=$row['url'].";";
+            }
+            $request->merge([
+                'url'=> $string
+            ]);
+        }
+    
         $product = Product::create($request->all());
-        $response = ['product' => $product, 'status' => 201];
+        $product_ = $this->ProductRepository->oneProduct($product->id);
+        $response = ['product' => $product_, 'status' => 201];
         return response()->json($response, 201);
     }
 
     public function update(Request $request, $id)
     {
+
+        if($request->images){
+            $request->merge([
+                'images'=> ""
+            ]);
+        }
+    
+        if($request->url && is_array($request->url)){               
+                $string = "";
+                foreach ($request->url as $key => $row) {
+
+                    $string .=$row['url'].";";
+                }
+                $request->merge([
+                    'url'=> $string
+                ]);
+        }
+
         $product = Product::find($id);
         $product->update($request->all());
-        $response = ['product' => $product, 'status' => 200];
+        $product_ = $this->ProductRepository->oneProduct($product->id);
+        $response = ['product' => $product_, 'status' => 200];
         return response()->json($response, 200);
     }
 

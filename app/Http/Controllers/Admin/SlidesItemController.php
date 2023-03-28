@@ -47,6 +47,17 @@ class SlidesItemController extends Controller
      */
     public function store(StoreSlideItemRequest $request)
     {
+        if($request->image){
+            $request->merge([
+                'image'=> ""
+            ]);
+        } 
+        
+        if($request->url){
+            $request->merge([
+                'url'=> $request->url   
+            ]);
+        }
 
         $request->merge([
             'title'=> str_replace(' ','_',$request->title)
@@ -64,15 +75,7 @@ class SlidesItemController extends Controller
          $request->merge([
             'description'=> str_replace(' ','_',$request->description)
          ]);
-
-        if (isset($request->image)) {
-             
-            $img_name= $request->title.'.jpg';
-             $request->merge([
-                'image'=> $img_name
-             ]);
-        }
-            
+      
         $slidesitem = SlidesItem::create($request->all());
         $response = ['slidesitem' => $slidesitem,'status' => 201];
         return response()->json($response, 201);
@@ -116,12 +119,16 @@ class SlidesItemController extends Controller
             'btn'=> str_replace(' ','_',$request->btn)
          ]);
 
-        if (isset($request->image)) {
-             
-            $img_name= $request->title.'.jpg';
-             $request->merge([
-                'image'=> $img_name
-             ]);
+         if($request->image){
+            $request->merge([
+                'image'=> ""
+            ]);
+        } 
+        
+        if($request->url){
+            $request->merge([
+                'url'=> $request->url   
+            ]);
         }
         
         $slidesitem->update($request->all());

@@ -26,6 +26,8 @@ class Product extends Model
         'is_featured',
         'options',
         'brand_id',
+        'category_id',
+        'collection_id',
         'is_variation',
         'is_searchable',
         'is_show_on_list',
@@ -47,6 +49,7 @@ class Product extends Model
         'status',
         'views',
         'stock_status', 
+        'url'
     ];
 
     /**

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Brand extends Model
+class Collection extends Model
 {
 
     /**
@@ -16,7 +16,7 @@ class Brand extends Model
         'name',
         'description',
         'status',
-        'website',
+        'slug',
         'is_featured',
         'order',
         'image',
