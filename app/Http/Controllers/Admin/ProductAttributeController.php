@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Product_attribute;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePattributeRequest;
+use App\Http\Requests\UpdatePattributeRequest;
 
 class ProductAttributeController extends Controller
 {
@@ -16,42 +18,51 @@ class ProductAttributeController extends Controller
         return response()->json(Product_attribute::all(), 200);
     }
 
-    
+    public function show($id)
+    {
+        return response()->json(Product_attribute::find($id), 201);
+    }
+
+
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StorePattributeRequest  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(StorePattributeRequest $request)
     {
+        $validated = $request->validated();
+
+        if (empty($request->slug)) {
+            $request->merge([
+               'slug'=> str_ireplace(' ','-',$request->name) 
+            ]);
+        }
+          
         $product_attribute = Product_attribute::create($request->all());
         $response = ['product_attribute' => $product_attribute,'status' => 201];
         return response()->json($response, 201);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Product_attribute  $product_attribute
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function show(Product_attribute $product_attribute)
-    {
-        return response()->json($product_attribute, 201);
-
     }
 
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UpdatePattributeRequest  $request
      * @param  \App\Models\Product_attribute  $product_attribute
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, Product_attribute $product_attribute)
+    public function update(UpdatePattributeRequest $request,$id)
     {
+        
+        if ($request->slug=="") {
+            $request->merge([
+                'slug'=> str_ireplace(' ','-',$request->name) 
+            ]);
+        }
+        
+        $product_attribute = Product_attribute::find($id);
         $product_attribute->update($request->all());
         $response = ['product_attribute' => $product_attribute, 'status' => 200];
         return response()->json($response, 200);
@@ -63,9 +74,9 @@ class ProductAttributeController extends Controller
      * @param  \App\Models\Product_attribute  $product_attribute
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(Product_attribute $product_attribute)
+    public function destroy($id)
     {
-        $product_attribute->delete();
+        Product_attribute::find($id)->delete();
         $response = ['product_attribute' => "", 'status' => 204];
         return response()->json($response, 204);
     }

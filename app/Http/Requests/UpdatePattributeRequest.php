@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateCollectionRequest extends FormRequest
+class UpdatePattributeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,21 +17,19 @@ class UpdateCollectionRequest extends FormRequest
         return true;
     }
 
-    /**
+     /**
      * Get the validation rules that apply to the request.
      *
      * @return array
      */
-    
     public function rules()
     {
-        $id= $this->route('id');
+        $product_attribute= $this->route('id');
+
         return [
-            'name'=> 'required|string|max:191',Rule::unique('collections')->ignore($id),
-            'description'=> 'required|string|max:191',
+            'name'=> 'required|string|max:191',Rule::unique('product_attributes')->ignore($product_attribute),
+            'slug'=> 'nullable|string|max:191',Rule::unique('product_attributes')->ignore($product_attribute),
             'status'=> 'required|nullable',
-            'is_featured'=> 'present',
-            'logo'=> 'nullable',
             'order'=> 'nullable',
         ];
     }
@@ -44,21 +42,9 @@ class UpdateCollectionRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name' => 'nom',
-            'description' => 'description',
-        ];
-    }
-
-    /**
-     * Get the error messages for the defined validation rules.
-     *
-     * @return array
-     */
-    public function messages()
-    {
-        return [
-            'name.required' => 'Le champ nom est obligatoire',
-            'description.required' => 'La description est obligatoire',
+            'name'=> 'Nom',
+            'slug'=> 'Slug',
+            'order'=> 'Ordre'
         ];
     }
 

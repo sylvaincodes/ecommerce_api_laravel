@@ -13,9 +13,9 @@ class Product_attribute_item extends Model
      */
     protected $fillable = [
         'product_attribute_id',
-        'title',
+        'name',
         'value',
-        'image',
+        'url',
         'is_default',
         'slug',
         'order',

@@ -12,7 +12,7 @@ class Product_attribute extends Model
      * @var array
      */
     protected $fillable = [
-        'title',
+        'name',
         'slug',
         'status',
         'order'
