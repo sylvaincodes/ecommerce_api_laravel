@@ -42,6 +42,8 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::get('/search/products', 'Admin\ProductController@search');
             Route::apiResource("slidesitems", Admin\SlidesItemController::class)->only(['show','update','destroy','store']);
             Route::apiResource("slides", Admin\SlideController::class)->only(['show','update','destroy','store']);
+            Route::apiResource("pvariations", Admin\ProductVariationController::class)->only(['index','show','update','destroy','store']);
+            Route::apiResource("pvariationattributes", Admin\ProductVariationAttributeController::class)->only(['index','show','update','destroy','store']);
             Route::apiResource("pattributes", Admin\ProductAttributeController::class)->only([ 'index','show','update','destroy','store']);
             Route::apiResource("pattributeitems", Admin\ProductAttributeItemController::class)->only(['index','show','update','destroy','store']);
         });
