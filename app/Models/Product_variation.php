@@ -12,6 +12,7 @@ class Product_variation extends Model
      * @var array
      */
     protected $fillable = [
+        'product_id',
         'price',
         'price_discount',
         'date_debut_discount',

@@ -17,7 +17,15 @@ class ProductVariationAttributeController extends Controller
      */
     public function index()
     {
-        return response()->json(Product_variation_attribute::all(), 200);
+        $id=$_GET['id'];
+        $data =   \DB::table('product_variation_attributes')
+        ->join('product_attribute_items', 'product_variation_attributes.product_attribute_item_id', '=', 'product_attribute_items.id')
+        ->leftjoin('product_attributes', 'product_attribute_items.product_attribute_id', '=', 'product_attributes.id')
+        ->select('product_variation_attributes.id', 'product_attribute_items.name as valeur','product_attributes.name as attribut')
+        ->where('product_variation_attributes.product_variation_id',$id)
+        ->get();
+
+        return response()->json($data, 200);
     }
 
     /**
@@ -28,8 +36,31 @@ class ProductVariationAttributeController extends Controller
      */
     public function store(StorePvariationattributeRequest $request)
     {
-        $pvariationattribute = Product_variation_attribute::create($request->all());
-        $response = ['pvariationattribute' => $pvariationattribute,'status' => 201];
+        $id=$_GET['id'];
+
+        $check =   \DB::table('product_variation_attributes')
+        ->select('*')
+        ->where('product_variation_id', $request->product_variation_id)
+        ->where('product_attribute_item_id', $request->product_attribute_item_id)
+        ->first();
+
+        if ($check) {
+            # code...
+            $response = ['message' => "Cette variation existe déja",'status' => 500];
+        }else{
+            $pvariationattribute = Product_variation_attribute::create($request->all());
+
+            $row =   \DB::table('product_variation_attributes')
+                ->join('product_attribute_items', 'product_variation_attributes.product_attribute_item_id', '=', 'product_attribute_items.id')
+                ->leftjoin('product_attributes', 'product_attribute_items.product_attribute_id', '=', 'product_attributes.id')
+                ->select('product_variation_attributes.id','product_attribute_items.name as valeur','product_attributes.name as attribut')
+                ->where('product_variation_attributes.product_variation_id',$id)
+                ->where('product_variation_attributes.id',$pvariationattribute->id)
+                ->first();
+
+            $response = ['pvariationattribute' => $row,'status' => 201];
+        }
+
         return response()->json($response, 201);
     }
 

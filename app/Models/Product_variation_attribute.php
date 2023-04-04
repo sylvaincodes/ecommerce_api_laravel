@@ -13,7 +13,7 @@ class Product_variation_attribute extends Model
      */
     protected $fillable = [
         'product_variation_id',
-        'product_attribute_id',
+        'product_attribute_item_id',
     ];
 
      /**

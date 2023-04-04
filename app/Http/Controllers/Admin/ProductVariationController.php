@@ -17,7 +17,12 @@ class ProductVariationController extends Controller
      */
     public function index()
     {
-        return response()->json(Product_variation::all(), 200);
+        $id=$_GET['id'];
+        $data =   \DB::table('product_variations')
+        ->select('product_variations.*')
+        ->where('product_variations.product_id',$id)
+        ->get();
+        return response()->json($data, 200);
     }
 
     /**
@@ -28,6 +33,17 @@ class ProductVariationController extends Controller
      */
     public function store(StorePvariationRequest $request)
     {
+
+        if($request->url){
+            $string = "";
+            foreach ($request->url as $key => $row) {
+                $string .=$row['url'].";";
+            }
+            $request->merge([
+                'url'=> $string
+            ]);
+        }
+
         $pvariation = Product_variation::create($request->all());
         $response = ['pvariation' => $pvariation,'status' => 201];
         return response()->json($response, 201);
@@ -53,6 +69,19 @@ class ProductVariationController extends Controller
      */
     public function update(UpdatePvariationRequest $request, Product_variation $pvariation)
     {
+
+        if($request->url && is_array($request->url)){               
+            $string = "";
+            foreach ($request->url as $key => $row) {
+
+                $string .=$row['url'].";";
+            }
+            $request->merge([
+                'url'=> $string
+            ]);
+    }
+
+
         $pvariation->update($request->all());
         $response = ['pvariation' => $pvariation, 'status' => 200];
         return response()->json($response, 200);

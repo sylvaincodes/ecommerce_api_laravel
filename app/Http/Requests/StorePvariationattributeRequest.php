@@ -24,8 +24,8 @@ class StorePvariationattributeRequest extends FormRequest
     public function rules()
     {
         return [
-            'product_variation_id' => 'required|string|max:12',
-            'product_attribute_id' => 'required|string|max:12',
+            'product_variation_id' => 'required|max:12',
+            'product_attribute_item_id' => 'required|max:12',
         ];
     }
 
@@ -37,16 +37,8 @@ class StorePvariationattributeRequest extends FormRequest
     public function attributes()
     {
         return [
-        'price' => 'Prix',
-        'price_discount' => 'Prix promotionnel',
-        'date_debut_discount' => 'Date début du prix promotionnel',
-        'date_fin_discount' => 'Date fin du prix promotionnel',
-        'stock_status' => 'Stock status',
-        'weight' => 'Poids',
-        'lenght' => 'Longueur',
-        'wide' => 'Largeur',
-        'height' => 'Hauteur',
-        'url' => 'Url',
+        'product_attribute_item_id' => 'Attribut id',
+       
         ];
     }
 
