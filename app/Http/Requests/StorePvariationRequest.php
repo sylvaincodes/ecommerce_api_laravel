@@ -24,16 +24,16 @@ class StorePvariationRequest extends FormRequest
     public function rules()
     {
         return [
-        'price' => 'required|numeric',
-        'price_discount' => 'nullable|numeric|max:12',
-        'date_debut_discount' => 'nullable|date|max:12',
-        'date_fin_discount' => 'nullable|date|max:12',
-        'stock_status' => 'required|string|max:25',
-        'weight' => 'nullable|string|max:10',
-        'lenght' => 'nullable|string|max:10',
-        'wide' => 'nullable|string|max:10',
-        'height' => 'nullable|string|max:10',
-        'url' => 'nullable|max:1000',
+            'price' => 'required|digits_between:1,10',
+            'price_discount' => 'nullable|digits_between:1,10',
+            'date_debut_discount' => 'nullable|date|max:191',
+            'date_fin_discount' => 'nullable|date|max:191',
+            'stock_status' => 'required|string|max:191',
+            'weight' => 'nullable|digits_between:1,10',
+            'lenght' => 'nullable|digits_between:1,10',
+            'wide' => 'nullable|digits_between:1,10',
+            'height' => 'nullable|digits_between:1,10',
+            'url' => 'nullable|max:1000',
         ];
     }
 

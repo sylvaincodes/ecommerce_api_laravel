@@ -27,16 +27,16 @@ class UpdatePvariationRequest extends FormRequest
         $product_attribute= $this->route('id');
 
         return [
-            'price' => 'required|numeric',
-            'price_discount' => 'nullable|numeric|max:1191',
+            'price' => 'required|digits_between:1,10',
+            'price_discount' => 'nullable|digits_between:1,10',
             'date_debut_discount' => 'nullable|date|max:191',
             'date_fin_discount' => 'nullable|date|max:191',
             'stock_status' => 'required|string|max:191',
-            'weight' => 'nullable|max:191',
-            'lenght' => 'nullable|max:191',
-            'wide' => 'nullable|max:191',
-            'height' => 'nullable|max:191',
-            'url' => 'nullable|max:1000',
+            'weight' => 'nullable|digits_between:1,10',
+            'lenght' => 'nullable|digits_between:1,10',
+            'wide' => 'nullable|digits_between:1,10',
+            'height' => 'nullable|digits_between:1,10',
+            'url' => 'nullable|max:2000',
         ];
     }
 
