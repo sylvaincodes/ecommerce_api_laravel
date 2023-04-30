@@ -21,7 +21,7 @@ class ProductVariationAttributeController extends Controller
         $data =   \DB::table('product_variation_attributes')
         ->join('product_attribute_items', 'product_variation_attributes.product_attribute_item_id', '=', 'product_attribute_items.id')
         ->leftjoin('product_attributes', 'product_attribute_items.product_attribute_id', '=', 'product_attributes.id')
-        ->select('product_variation_attributes.id', 'product_attribute_items.name as valeur','product_attributes.name as attribut')
+        ->select('product_variation_attributes.id', 'product_attribute_items.value as valeur','product_attributes.name as attribut')
         ->where('product_variation_attributes.product_variation_id',$id)
         ->get();
 
@@ -53,7 +53,7 @@ class ProductVariationAttributeController extends Controller
             $row =   \DB::table('product_variation_attributes')
                 ->join('product_attribute_items', 'product_variation_attributes.product_attribute_item_id', '=', 'product_attribute_items.id')
                 ->leftjoin('product_attributes', 'product_attribute_items.product_attribute_id', '=', 'product_attributes.id')
-                ->select('product_variation_attributes.id','product_attribute_items.name as valeur','product_attributes.name as attribut')
+                ->select('product_variation_attributes.id','product_attribute_items.value as valeur','product_attributes.name as attribut')
                 ->where('product_variation_attributes.product_variation_id',$id)
                 ->where('product_variation_attributes.id',$pvariationattribute->id)
                 ->first();

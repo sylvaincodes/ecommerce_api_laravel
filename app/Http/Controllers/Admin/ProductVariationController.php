@@ -34,7 +34,7 @@ class ProductVariationController extends Controller
     public function store(StorePvariationRequest $request)
     {
 
-        if($request->url){
+        if($request->url && is_array($request->url)){               
             $string = "";
             foreach ($request->url as $key => $row) {
                 $string .=$row['url'].";";

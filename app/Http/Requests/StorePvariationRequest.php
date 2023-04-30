@@ -24,6 +24,7 @@ class StorePvariationRequest extends FormRequest
     public function rules()
     {
         return [
+            // 'product_id' => 'required',
             'price' => 'required|digits_between:1,10',
             'price_discount' => 'nullable|digits_between:1,10',
             'date_debut_discount' => 'nullable|date|max:191',
@@ -33,7 +34,7 @@ class StorePvariationRequest extends FormRequest
             'lenght' => 'nullable|digits_between:1,10',
             'wide' => 'nullable|digits_between:1,10',
             'height' => 'nullable|digits_between:1,10',
-            'url' => 'nullable|max:1000',
+            'url' => 'required|nullable|max:1000',
         ];
     }
 

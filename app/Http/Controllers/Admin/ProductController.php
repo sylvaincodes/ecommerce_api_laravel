@@ -27,8 +27,9 @@ class ProductController extends Controller
     public function index()
     {
         $products = $this->ProductRepository->getAllProducts();
+        $variations = $this->ProductRepository->getAllProductsVariations();
 
-        $response = ['data' => $products, 'status' => 201];
+        $response = ['data' => $products,'variations' => $variations, 'status' => 201];
         return response()->json($response, 200);
     }
 
@@ -40,13 +41,11 @@ class ProductController extends Controller
     public function store(Request $request)
     {
 
-        if($request->images){
                 $request->merge([
                     'images'=> ""
                 ]);
-        }
-        
-        if($request->url){
+            
+        if(!empty($request->url)){
             
             $string = "";
             foreach ($request->url as $key => $row) {
@@ -55,6 +54,13 @@ class ProductController extends Controller
             }
             $request->merge([
                 'url'=> $string
+            ]);
+            
+        }else
+        {
+            
+            $request->merge([
+                'url'=> ""
             ]);
         }
     
@@ -67,11 +73,9 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
 
-        if($request->images){
-            $request->merge([
-                'images'=> ""
-            ]);
-        }
+        $request->merge([
+            'images'=> ""
+        ]);
     
         if($request->url && is_array($request->url)){               
                 $string = "";

@@ -23,8 +23,9 @@ class SlidesItemRepository
 		$slidesitem =   \DB::table('slides_items')
 		->join('slides', 'slides_items.slide_id', '=', 'slides.id')
 		->select('slides_items.*','slides.name as slide_name')
-	   ->where('slides_items.id',$id)
-       ->first();
+		->where('slides_items.id',$id)
+		->where('slides.status',"published")
+		->first();
 	   return $slidesitem;
 	}
 }

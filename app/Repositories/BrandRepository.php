@@ -11,6 +11,7 @@ class BrandRepository
 	public function getAllBrands(){
 		$brands =   \DB::table('brands')
        ->select('brands.*')
+	   ->where('brands.status',"published")
        ->get();
 	   return $brands;
 	}

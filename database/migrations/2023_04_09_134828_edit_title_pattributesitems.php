@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnImageToProductAttributeItems extends Migration
+class EditTitlePattributesitems extends Migration
 {
     /**
      * Run the migrations.
@@ -14,12 +14,7 @@ class AddColumnImageToProductAttributeItems extends Migration
     public function up()
     {
         Schema::table('product_attribute_items', function (Blueprint $table) {
-
-            $column=Schema::hasColumn('product_attribute_items', 'url');
-            if (!$column) {
-                $table->string('url')->nullable();
-            }
-           
+            $table->renameColumn('title', 'name');
         });
     }
 
@@ -31,7 +26,7 @@ class AddColumnImageToProductAttributeItems extends Migration
     public function down()
     {
         Schema::table('product_attribute_items', function (Blueprint $table) {
-            
+            $table->renameColumn('name', 'title');
         });
     }
 }

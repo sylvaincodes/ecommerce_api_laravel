@@ -11,6 +11,7 @@ class CollectionRepository
 	public function getAllCollections(){
 		$collections =   \DB::table('collections')
        ->select('collecctions.*')
+	   ->where('collecctions.status',"published")
        ->get();
 	   return $collections;
 	}

@@ -25,8 +25,8 @@ class UpdatePvariationRequest extends FormRequest
     public function rules()
     {
         $product_attribute= $this->route('id');
-
         return [
+            // 'product_id' => 'required',
             'price' => 'required|digits_between:1,10',
             'price_discount' => 'nullable|digits_between:1,10',
             'date_debut_discount' => 'nullable|date|max:191',
@@ -36,7 +36,7 @@ class UpdatePvariationRequest extends FormRequest
             'lenght' => 'nullable|digits_between:1,10',
             'wide' => 'nullable|digits_between:1,10',
             'height' => 'nullable|digits_between:1,10',
-            'url' => 'nullable|max:2000',
+            'url' => 'required|nullable|max:2000',
         ];
     }
 

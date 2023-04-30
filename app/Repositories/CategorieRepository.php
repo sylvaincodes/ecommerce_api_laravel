@@ -12,6 +12,7 @@ class CategorieRepository
 		$categories =   \DB::table('categories')
 		//->leftjoin('categories', 'categories.parent_id', '=', 'categories.id')
        ->select('categories.*')
+	   ->where('categories.status',"published")
        ->get();
 	   return $categories;
 	}
