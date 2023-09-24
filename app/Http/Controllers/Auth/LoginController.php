@@ -44,6 +44,7 @@ class LoginController extends Controller
     {
         $this->validateLogin($request);
 
+
         if ($this->attemptLogin($request)) {
 
 
@@ -54,9 +55,14 @@ class LoginController extends Controller
             return response()->json([
                 'data' => $user->toArray(),
             ]);
+        } else {
+            return response()->json([
+                'message' => "Impossible de se connecter",
+            ]);
         }
 
-        return $this->sendFailedLoginResponse($request);
+
+        // return $this->sendFailedLoginResponse($request);
     }
 
 

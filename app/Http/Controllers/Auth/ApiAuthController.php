@@ -12,7 +12,6 @@ use Auth;
 
 class ApiAuthController extends Controller
 {
-    
     public function register (Request $request) {
         $validator = Validator::make($request->all(), [
             'username' => 'required|string|max:255',
