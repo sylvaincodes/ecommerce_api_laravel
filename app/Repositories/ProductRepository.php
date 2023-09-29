@@ -10,6 +10,7 @@ class ProductRepository
 	*/
 	public function getAllProducts(){
 		$products =   \DB::table('products')
+		->join('product_variations', 'products.id', '=', 'product_variations.product_id')
 		->leftjoin('categories', 'products.category_id', '=', 'categories.id')
 		->leftjoin('reviews', 'products.id', '=', 'reviews.product_id')
 		->select('products.*','categories.name as category'  , \DB::raw('round(AVG(reviews.star),0) as rating') )
@@ -25,9 +26,14 @@ class ProductRepository
 	public function getProductVariationsAttributs(){
 		$products =   \DB::table('product_variation_attributes')
 		->join('product_attribute_items', 'product_variation_attributes.product_attribute_item_id', '=', 'product_attribute_items.id')
-		->join('product_variations', 'product_variation_attributes.product_variation_id', '=', 'product_variations.id')
+		->rightjoin('product_variations', 'product_variation_attributes.product_variation_id', '=', 'product_variations.id')
+		->join('products', 'product_variations.product_id', '=', 'products.id')
 		->rightjoin('product_attributes', 'product_attribute_items.product_attribute_id', '=', 'product_attributes.id')
-		->select('product_variation_attributes.id as product_variation_attribute_id','product_variation_attributes.*','product_attribute_items.*', 'product_attributes.slug','product_variations.product_id','product_variations.stock_status')
+		->select('product_variation_attributes.id as product_variation_attribute_id',
+		'product_variation_attributes.*',
+		'product_attribute_items.*', 
+		'product_attributes.slug','product_variations.product_id','product_variations.stock_status',
+		'product_variations.price','product_variations.price_discount')
 		->orderBy('product_variations.product_id')
 		->get();
 		return $products;
@@ -46,7 +52,9 @@ class ProductRepository
 		->join('product_variation_attributes', 'product_variations.id', '=', 'product_variation_attributes.product_variation_id')
 		->join('product_attribute_items', 'product_variation_attributes.product_attribute_item_id', '=', 'product_attribute_items.id')
 		->join('product_attributes', 'product_attribute_items.product_attribute_id', '=', 'product_attributes.id')
-		->select('collections.name as collection','brands.name as brand','categories.name as category','products.name','products.description','products.content','products.content','product_variations.*', 'product_variation_attributes.product_attribute_item_id','product_attribute_items.product_attribute_id','product_attribute_items.value as valeur','product_attributes.slug as attribut')
+		->select('collections.name as collection','brands.name as brand',
+		'categories.name as category','products.name','products.description',
+		'products.content','products.content','product_variations.*', 'product_variation_attributes.product_attribute_item_id','product_attribute_items.product_attribute_id','product_attribute_items.value as valeur','product_attributes.slug as attribut')
 		->where('products.status',"published")
 		->get();
 		return $products;

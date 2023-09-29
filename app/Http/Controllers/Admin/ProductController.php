@@ -28,19 +28,25 @@ class ProductController extends Controller
     {
         $products = $this->ProductRepository->getAllProducts();
         $variations_attributes = $this->ProductRepository->getProductVariationsAttributs();
-        
         $variations_temp=[];
         foreach ($variations_attributes as $key => $v_a) {
             foreach ($variations_attributes as $key_2 => $v_a_2) {
+
+                $i=0;
                 if ($v_a_2->product_variation_id ==$v_a->product_variation_id ) {
+                    
                     if ($v_a_2->slug=="color") {
-                        $variations_temp[$v_a->product_id]["variation"][$v_a->product_variation_id]['stock_status'] =  $v_a_2->stock_status;
-                        $variations_temp[$v_a->product_id]["variation"][$v_a->product_variation_id]['color'] =  $v_a_2->value;
-                        $variations_temp[$v_a->product_id]["variation"][$v_a->product_variation_id]['product_id'] =  $v_a_2->product_id;
+                        $variations_temp[$v_a->product_id]["variation"][$i]['price'] =  $v_a_2->price;
+                        $variations_temp[$v_a->product_id]["variation"][$i]['price_discount'] =  $v_a_2->price_discount;
+                        $variations_temp[$v_a->product_id]["variation"][$i]['stock_status'] =  $v_a_2->stock_status;
+                        $variations_temp[$v_a->product_id]["variation"][$i]['color'] =  $v_a_2->value;
+                        $variations_temp[$v_a->product_id]["variation"][$i]['product_id'] =  $v_a_2->product_id;
                     }else{
-                        $variations_temp[$v_a->product_id]["variation"][$v_a->product_variation_id]['size'][$key_2]["name"] =  $v_a_2->value;
+                        $variations_temp[$v_a->product_id]["variation"][$i]['size'][$key_2]["name"] =  $v_a_2->value;
                     }
                 }
+
+                $i++;
             }
         }
         
@@ -55,8 +61,6 @@ class ProductController extends Controller
                     if ($variation_temp_['product_id'] ==$product->id ) {
                         
                         $products_temp[$key]->variation[$key_4] = $variation_temp_;
-                    }else{
-                        $products_temp[$key]->variation = [];
                     }
                     
                 };
@@ -75,20 +79,32 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         
-        $request->merge([
-            'images'=> ""
-        ]);
+        if(!empty($request->images)){
+                foreach ($request->images as $key => $image) {
+                    $image->move(public_path('uploads'),$image->extension());
+                }
+        }else{
+            $request->merge([
+                'images'=> ""
+            ]);
+        }
         
         if(!empty($request->url)){
             
             $string = "";
-            foreach ($request->url as $key => $row) {
-                
-                $string .=$row['url'].";";
+
+            if(is_array($request->url)){
+
+                foreach ($request->url as $key => $row) {
+                    
+                    $string .=$row['url'].";";
+                }
+                $request->merge([
+                    'url'=> $string
+                ]);
+            }else{
+                $string = $request->url;
             }
-            $request->merge([
-                'url'=> $string
-            ]);
             
         }else
         {
