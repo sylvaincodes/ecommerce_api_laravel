@@ -33,6 +33,7 @@ class UpdateCollectionRequest extends FormRequest
             'is_featured'=> 'present',
             'logo'=> 'nullable',
             'order'=> 'nullable',
+            'parent_id'=> 'nullable',
         ];
     }
 

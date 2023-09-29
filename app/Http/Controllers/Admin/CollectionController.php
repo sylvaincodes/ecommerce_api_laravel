@@ -28,9 +28,9 @@ class CollectionController extends Controller
 
     public function index()
     {
-        // $collections = $this->CollectionRepository->getAllCollections();
+        $collections = $this->CollectionRepository->getAllCollections();
         // $response = ['data' => $collections, 'last_page' => "" , "current_page" => 1 , 'status' => 200 , "error"=>"" ];
-        return response()->json(Collection::all(), 200);
+        return response()->json([ "data" => $collections,  "status" => 200]);
     }
     
     public function show($id)

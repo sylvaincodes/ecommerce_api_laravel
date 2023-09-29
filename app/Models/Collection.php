@@ -20,7 +20,9 @@ class Collection extends Model
         'is_featured',
         'order',
         'image',
-        'url'
+        'url',
+        'parent_id',
+        'link'
     ];
 
     /**

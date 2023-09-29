@@ -10,8 +10,8 @@ class CollectionRepository
 	*/
 	public function getAllCollections(){
 		$collections =   \DB::table('collections')
-       ->select('collecctions.*')
-	   ->where('collecctions.status',"published")
+       ->select('collections.*')
+	   ->where('collections.status',"published")
        ->get();
 	   return $collections;
 	}
