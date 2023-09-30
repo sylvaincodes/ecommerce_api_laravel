@@ -36,7 +36,7 @@ class SlidesItemController extends Controller
     public function index()
     {
         $slidesitems = $this->SlidesItemRepository->getAllSlidesitems();
-        return response()->json($slidesitems, 200);
+        return response()->json(["data" => $slidesitems,"status"=> 200]);
     }
 
     /**

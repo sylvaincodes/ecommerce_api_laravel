@@ -52,13 +52,15 @@ class ProductController extends Controller
         
         $products_temp=[];
         
+
         foreach ($products as $key => $product) {
             $products_temp[$key] = $product;
             foreach ($variations_temp as $key_3 => $variation_temp) {
                 
                 foreach ($variation_temp['variation'] as $key_4 => $variation_temp_) {
                     
-                    if ($variation_temp_['product_id'] ==$product->id ) {
+                    // dd( $variation_temp_);
+                    if ( isset($variation_temp_['product_id']) && $product->id == $variation_temp_['product_id'] ) {
                         
                         $products_temp[$key]->variation[$key_4] = $variation_temp_;
                     }

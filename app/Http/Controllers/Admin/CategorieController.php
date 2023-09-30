@@ -30,8 +30,8 @@ class CategorieController extends Controller
         // $categories = $this->CategorieRepository->getAllCategories();
         // $response = ['data' => $categories, 'last_page' => "" , "current_page" => 1 , 'status' => 200 , "error"=>"" ];
         
-        $response = ['data' => Categorie::all(), 'status' => 201];
-        return response()->json($response, 200);
+        $response = ['data' => Categorie::all(), 'status' => 200];
+        return response()->json($response);
     }
     
     public function show($id)
