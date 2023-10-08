@@ -3,34 +3,35 @@ HOST: https://laravelapiecommerce.000webhostapp.com/public/api/
 
 # API Ecommerce Public
 
-La documentation de l'API est essentiellement un manuel d'instructions qui explique 
-comment utiliser l'API et ses services. Ce manuel peut contenir des didacticiels, des exemples de code, des captures d'écran et tout ce qui aide les utilisateurs à mieux comprendre comment utiliser l'API.
-<ul>Chaque End Point envoie une réponse JSON contenant
- <li> une clé <strong>status</strong> obligatoire  
-</li> <li> une clé <strong>data </strong> pour les methodes de type GET  </li> 
-<li> une clé <strong>message </strong> pour les cas d'erreur  </li>
-</ul>  
+The API documentation is essentially an instruction manual that explains
+how to use the API and its services. This manual may contain tutorials, code samples, screenshots, and anything else that helps users better understand how to use the API.
 
-## Création de compte [/register]
+<ul>Each End Point sends a JSON response containing
+    <li> a mandatory <strong>status</strong> key
+    </li> <li> a <strong>data </strong> key for GET type methods </li>
+    <li> a <strong>message key </strong> for error cases </li>
+</ul>
+
+## Register [/register]
 
 ### api/register [POST]  
-<strong>ddd </strong> 
 
-End Point pour pour créer compte et générer un token automatiquement.
+End Point to create an account and generate a token automatically.
 
 + Request (application/json)
 
         {
             "username": "sylvain",
             "email": "sylvaintestapi@gmail.com",
-            "password": "secret22"
+            "password": "secret22",
+            "password_confirmation": "secret22"
         }
 
 + Response 201 (application/json)
 
     + Headers
 
-            Location: /
+            Location: /users/
 
     + Body
 
@@ -58,10 +59,10 @@ End Point pour pour créer compte et générer un token automatiquement.
             }
             
             
-## Authentification [/login]
+## Login [/login]
 ### api/login [POST]
 
-End Point pour pour générer un token après l'authentification.
+End Point to generate a token after authentication.
 
 + Request (application/json)
 
@@ -101,11 +102,11 @@ End Point pour pour générer un token après l'authentification.
               }
             }
             
-## Révocation du token [/logout]
+## Logout [/logout]
 
 ### api/logout [POST]
 
-Révoquer le token
+Revoke token
 
 + Request 
 
@@ -115,15 +116,11 @@ Révoquer le token
             Authorization: Bearer PUT_TOKEN_HERE
         
 
-+ Response 204 (application/json)
++ Response 204 
 
-    + Headers
-
-            Location: /
-
-            
+        
               
-## Les utilisateurs [/users]
+## Get Users List [/users]
 
 ### api/users [GET]
 
@@ -143,9 +140,144 @@ Révoquer le token
                 "status": "success",
                 "data": [
                     {
-                        "choice": "Ruby",
-                        "votes": 256
+                        ....
                     }
                 ]
             }
         ]
+        
+              
+## Get Products List [/products]
+
+### api/products [GET]
+
++ Request 
+
+    + Headers 
+
+            Accept: application/json,
+            Authorization: Bearer PUT_TOKEN_HERE
+        
+
+            
++ Response 200 (application/json)
+
+        [
+            {
+                "status": "success",
+                "data": [
+                    {
+                        ....
+                    }
+                ]
+            }
+        ]
+        
+        
+              
+
+## Get Product [/products/{id}]
+
+### api/products/{id} [GET]
+
++ Request 
+
+    + Headers 
+
+            Accept: application/json,
+            Authorization: Bearer PUT_TOKEN_HERE
+        
++ Parameters
+    + id (number) - this is th ID of the product in the form of an integer
+    
+            
++ Response 200 (application/json)
+
+        [
+            {
+                "status": "success",
+                "data": [
+                    {
+                        ....
+                    }
+                ]
+            }
+        ]
+  
+                
+## Get Orders List [/orders]
+
+### api/orders [GET]
+
++ Request 
+
+    + Headers 
+
+            Accept: application/json,
+            Authorization: Bearer PUT_TOKEN_HERE
+        
+
+            
++ Response 200 (application/json)
+
+        {
+           "status":"success",
+           "data":[
+              {
+                 "id":1,
+                 "payment_status":"enattente",
+                 "method_payment":"stripe",
+                 "payment_id":"ID768868",
+                 "total":1200,
+                 "shipping_fees":10,
+                 "created_at":"2023-10-08 22:51:34",
+                 "updated_at":null,
+                 "ordersitems":[
+                    {
+                       "id":1,
+                       "order_id":1,
+                       "product_id":1,
+                       "quantity":10,
+                       "price":120,
+                       "total":1200,
+                       "status":"waiting",
+                       "created_at":null,
+                       "updated_at":null
+                    }
+                 ]
+              },
+              {}
+           ]
+        }
+                
+        
+## Get Order [/orders/{id}]
+
+### api/orders/{id} [GET]
+
++ Request 
+
+    + Headers 
+
+            Accept: application/json,
+            Authorization: Bearer PUT_TOKEN_HERE
+        
++ Parameters
+    + id (number) - this is th ID of the order in the form of an integer
+    
+            
++ Response 200 (application/json)
+
+        {
+           "status":"success",
+           "data":{
+              "id":2,
+              "payment_status":"enattente",
+              "method_payment":"stripe",
+              "payment_id":"EZREZR3RSSE",
+              "total":100,
+              "shipping_fees":10,
+              "user_id":1,
+              "created_at":"2023-10-08T19:53:22.000000Z",
+              "updated_at":null
+        }
