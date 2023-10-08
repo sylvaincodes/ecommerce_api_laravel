@@ -1,0 +1,151 @@
+FORMAT: 1A
+HOST: https://laravelapiecommerce.000webhostapp.com/public/api/
+
+# API Ecommerce Public
+
+La documentation de l'API est essentiellement un manuel d'instructions qui explique 
+comment utiliser l'API et ses services. Ce manuel peut contenir des didacticiels, des exemples de code, des captures d'écran et tout ce qui aide les utilisateurs à mieux comprendre comment utiliser l'API.
+<ul>Chaque End Point envoie une réponse JSON contenant
+ <li> une clé <strong>status</strong> obligatoire  
+</li> <li> une clé <strong>data </strong> pour les methodes de type GET  </li> 
+<li> une clé <strong>message </strong> pour les cas d'erreur  </li>
+</ul>  
+
+## Création de compte [/register]
+
+### api/register [POST]  
+<strong>ddd </strong> 
+
+End Point pour pour créer compte et générer un token automatiquement.
+
++ Request (application/json)
+
+        {
+            "username": "sylvain",
+            "email": "sylvaintestapi@gmail.com",
+            "password": "secret22"
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /
+
+    + Body
+
+            {
+              "status": "success",
+              "token": "token",
+              "user":
+              {
+              "id":27,
+              "email":"sylvaino@gmail.com",
+              "email_verified_at":null,
+              "created_at":"2023-02-25T17:17:01.000000Z",
+              "updated_at":"2023-02-25T17:17:01.000000Z",
+              "first_name":null,
+              "last_name":null,
+              "username":"sylvaino",
+              "avatar_id":null,
+              "super_user":0,
+              "manage_supers":0,
+              "permissions":null,
+              "last_login":null,
+              "api_token":null,
+              "type":2
+              }
+            }
+            
+            
+## Authentification [/login]
+### api/login [POST]
+
+End Point pour pour générer un token après l'authentification.
+
++ Request (application/json)
+
+        {
+            "email": "sylvaino@gmail.com",
+            "password": "secret22"
+        }
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Location: /
+
+    + Body
+
+            {
+              "status": "success",
+              "token": "token",
+              "user":
+              {
+              "id":27,
+              "email":"sylvaino@gmail.com",
+              "email_verified_at":null,
+              "created_at":"2023-02-25T17:17:01.000000Z",
+              "updated_at":"2023-02-25T17:17:01.000000Z",
+              "first_name":null,
+              "last_name":null,
+              "username":"sylvaino",
+              "avatar_id":null,
+              "super_user":0,
+              "manage_supers":0,
+              "permissions":null,
+              "last_login":null,
+              "api_token":null,
+              "type":2
+              }
+            }
+            
+## Révocation du token [/logout]
+
+### api/logout [POST]
+
+Révoquer le token
+
++ Request 
+
+    + Headers 
+
+            Accept: application/json,
+            Authorization: Bearer PUT_TOKEN_HERE
+        
+
++ Response 204 (application/json)
+
+    + Headers
+
+            Location: /
+
+            
+              
+## Les utilisateurs [/users]
+
+### api/users [GET]
+
++ Request 
+
+    + Headers 
+
+            Accept: application/json,
+            Authorization: Bearer PUT_TOKEN_HERE
+        
+
+            
++ Response 200 (application/json)
+
+        [
+            {
+                "status": "success",
+                "data": [
+                    {
+                        "choice": "Ruby",
+                        "votes": 256
+                    }
+                ]
+            }
+        ]
