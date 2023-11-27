@@ -1,0 +1,283 @@
+FORMAT: 1A
+HOST: https://laravelapiecommerce.000webhostapp.com/public/api/
+
+# API Ecommerce Public
+
+The API documentation is essentially an instruction manual that explains
+how to use the API and its services. This manual may contain tutorials, code samples, screenshots, and anything else that helps users better understand how to use the API.
+
+<ul>Each End Point sends a JSON response containing
+    <li> a mandatory <strong>status</strong> key
+    </li> <li> a <strong>data </strong> key for GET type methods </li>
+    <li> a <strong>message key </strong> for error cases </li>
+</ul>
+
+## Register [/register]
+
+### api/register [POST]  
+
+End Point to create an account and generate a token automatically.
+
++ Request (application/json)
+
+        {
+            "username": "sylvain",
+            "email": "sylvaintestapi@gmail.com",
+            "password": "secret22",
+            "password_confirmation": "secret22"
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /users/
+
+    + Body
+
+            {
+              "status": "success",
+              "token": "token",
+              "user":
+              {
+              "id":27,
+              "email":"sylvaino@gmail.com",
+              "email_verified_at":null,
+              "created_at":"2023-02-25T17:17:01.000000Z",
+              "updated_at":"2023-02-25T17:17:01.000000Z",
+              "first_name":null,
+              "last_name":null,
+              "username":"sylvaino",
+              "avatar_id":null,
+              "super_user":0,
+              "manage_supers":0,
+              "permissions":null,
+              "last_login":null,
+              "api_token":null,
+              "type":2
+              }
+            }
+            
+            
+## Login [/login]
+### api/login [POST]
+
+End Point to generate a token after authentication.
+
++ Request (application/json)
+
+        {
+            "email": "sylvaino@gmail.com",
+            "password": "secret22"
+        }
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Location: /
+
+    + Body
+
+            {
+              "status": "success",
+              "token": "token",
+              "user":
+              {
+              "id":27,
+              "email":"sylvaino@gmail.com",
+              "email_verified_at":null,
+              "created_at":"2023-02-25T17:17:01.000000Z",
+              "updated_at":"2023-02-25T17:17:01.000000Z",
+              "first_name":null,
+              "last_name":null,
+              "username":"sylvaino",
+              "avatar_id":null,
+              "super_user":0,
+              "manage_supers":0,
+              "permissions":null,
+              "last_login":null,
+              "api_token":null,
+              "type":2
+              }
+            }
+            
+## Logout [/logout]
+
+### api/logout [POST]
+
+Revoke token
+
++ Request 
+
+    + Headers 
+
+            Accept: application/json,
+            Authorization: Bearer PUT_TOKEN_HERE
+        
+
++ Response 204 
+
+        
+              
+## Get Users List [/users]
+
+### api/users [GET]
+
++ Request 
+
+    + Headers 
+
+            Accept: application/json,
+            Authorization: Bearer PUT_TOKEN_HERE
+        
+
+            
++ Response 200 (application/json)
+
+        [
+            {
+                "status": "success",
+                "data": [
+                    {
+                        ....
+                    }
+                ]
+            }
+        ]
+        
+              
+## Get Products List [/products]
+
+### api/products [GET]
+
++ Request 
+
+    + Headers 
+
+            Accept: application/json,
+            Authorization: Bearer PUT_TOKEN_HERE
+        
+
+            
++ Response 200 (application/json)
+
+        [
+            {
+                "status": "success",
+                "data": [
+                    {
+                        ....
+                    }
+                ]
+            }
+        ]
+        
+        
+              
+
+## Get Product [/products/{id}]
+
+### api/products/{id} [GET]
+
++ Request 
+
+    + Headers 
+
+            Accept: application/json,
+            Authorization: Bearer PUT_TOKEN_HERE
+        
++ Parameters
+    + id (number) - this is th ID of the product in the form of an integer
+    
+            
++ Response 200 (application/json)
+
+        [
+            {
+                "status": "success",
+                "data": [
+                    {
+                        ....
+                    }
+                ]
+            }
+        ]
+  
+                
+## Get Orders List [/orders]
+
+### api/orders [GET]
+
++ Request 
+
+    + Headers 
+
+            Accept: application/json,
+            Authorization: Bearer PUT_TOKEN_HERE
+        
+
+            
++ Response 200 (application/json)
+
+        {
+           "status":"success",
+           "data":[
+              {
+                 "id":1,
+                 "payment_status":"enattente",
+                 "method_payment":"stripe",
+                 "payment_id":"ID768868",
+                 "total":1200,
+                 "shipping_fees":10,
+                 "created_at":"2023-10-08 22:51:34",
+                 "updated_at":null,
+                 "ordersitems":[
+                    {
+                       "id":1,
+                       "order_id":1,
+                       "product_id":1,
+                       "quantity":10,
+                       "price":120,
+                       "total":1200,
+                       "status":"waiting",
+                       "created_at":null,
+                       "updated_at":null
+                    }
+                 ]
+              },
+              {}
+           ]
+        }
+                
+        
+## Get Order [/orders/{id}]
+
+### api/orders/{id} [GET]
+
++ Request 
+
+    + Headers 
+
+            Accept: application/json,
+            Authorization: Bearer PUT_TOKEN_HERE
+        
++ Parameters
+    + id (number) - this is th ID of the order in the form of an integer
+    
+            
++ Response 200 (application/json)
+
+        {
+           "status":"success",
+           "data":{
+              "id":2,
+              "payment_status":"enattente",
+              "method_payment":"stripe",
+              "payment_id":"EZREZR3RSSE",
+              "total":100,
+              "shipping_fees":10,
+              "user_id":1,
+              "created_at":"2023-10-08T19:53:22.000000Z",
+              "updated_at":null
+        }
