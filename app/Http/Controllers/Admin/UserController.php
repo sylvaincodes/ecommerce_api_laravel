@@ -11,7 +11,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        return response()->json(User::all(), 200);
+        return response()->json(["status" => "success", "data" => User::all() ], 200);
     }
 
     public function show($id)
@@ -22,16 +22,15 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $user = User::create($request->all());
-        $response = ['user' => $user, 'status' => 201];
+        $response = ['user' => $user, 'status' => "success"];
         return response()->json($response, 201);
-
     }
 
     public function update(Request $request, $id)
     {
         $user = User::find($id);
         $user->update($request->all());
-        $response = ['user' => $user, 'status' => 200];
+        $response = ['user' => $user, 'status' => "success"];
         return response()->json($response, 200);
     }
 
@@ -39,7 +38,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $user->delete();
-        $response = ['user' => "", 'status' => 204];
+        $response = ['user' => "", 'status' => "success"];
         return response()->json($response, 204);
     }
 }

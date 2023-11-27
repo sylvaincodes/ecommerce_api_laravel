@@ -25,6 +25,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::apiResource("products", Admin\ProductController::class)->only(['index']);
     Route::apiResource("slides", Admin\SlideController::class)->only(['index']);
     Route::apiResource("pvariationattributes", Admin\ProductVariationAttributeController::class)->only(['index']);
+    Route::apiResource("orders", Admin\OrderController::class)->only(['index','store','update','show']);
 
     // Routes protégées
     Route::middleware('auth:api')->group(function () {
@@ -47,12 +48,13 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::apiResource("pvariationattributes", Admin\ProductVariationAttributeController::class)->only(['show','update','destroy','store']);
             Route::apiResource("pattributes", Admin\ProductAttributeController::class)->only([ 'index','show','update','destroy','store']);
             Route::apiResource("pattributeitems", Admin\ProductAttributeItemController::class)->only(['index','show','update','destroy','store']);
+            Route::apiResource("orders", Admin\OrderController::class)->only(['destroy']);
         });
         
         // Routes Super Administrateur
         Route::group(['middleware' => ['api.superAdmin']], function () {
             Route::post('/users', 'Admin\UserController@store');
-            Route::any('/users/{id}', 'Admin\UserController@update');
+            Route::put('/users/{id}', 'Admin\UserController@update');
             Route::delete('/users/{id}', 'Admin\UserController@delete');
         });
 

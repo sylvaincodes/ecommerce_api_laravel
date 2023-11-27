@@ -30,7 +30,7 @@ class BrandController extends Controller
     {
         // $brands = $this->BrandRepository->getAllBrands();
         // $response = ['data' => $brands, 'last_page' => "" , "current_page" => 1 , 'status' => 200 , "error"=>"" ];
-        return response()->json([ "data" => Brand::all(), "status" => 200 ]);
+        return response()->json([ "status" => "success", "data" => Brand::all() ]);
     }
     
     public function show($id)

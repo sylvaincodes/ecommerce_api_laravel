@@ -109,6 +109,6 @@ class CollectionController extends Controller
         $collection = Collection::find($id);
         $collection->delete();
         $response = ['collection' => "", 'status' => 204];
-        return response()->json($response, 204);
+        return response()->json(204);
     }
 }

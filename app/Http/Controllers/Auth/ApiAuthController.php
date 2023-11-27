@@ -20,7 +20,7 @@ class ApiAuthController extends Controller
         ]);
         if ($validator->fails())
         {
-            return response(['errors'=>$validator->errors()->all()], 422);
+            return response(['message'=>$validator->errors()->all() , 'status'=> 'error'], 422);
         }
         $password = $request['password'];
         $request['password']=Hash::make($password);
@@ -28,8 +28,8 @@ class ApiAuthController extends Controller
         $request['remember_token'] = Str::random(10);
         $user = User::create($request->toArray());
         $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-        $response = ['token' => $token];
-        return response($response, 200);
+        $response = ['status'=> 'success','token' => $token, 'user'=> $user,"message" => "user created successfully!"];
+        return response($response, 201);
     }
 
 
@@ -48,14 +48,14 @@ class ApiAuthController extends Controller
             if (Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('Laravel Password Grant Client')->accessToken;
 
-                $response = ['token' => $token, 'user' => $user,'status' => 200 ];
+                $response = ['token' => $token, 'user' => $user,'status' => 'success' ];
                 return response($response, 200);
             } else {
-                $response = ["message" => "Le mot de passe est erroné" ,'status' => 422 ];
+                $response = ["message" => "Le mot de passe est erroné" ,'status' => 'error' ];
                 return response($response, 422);
             }
         } else {
-            $response = ["message" =>'Adresse email incorrecte', "status" => 422];
+            $response = ["message" =>'Adresse email incorrecte', "status" => 'error'];
             return response($response, 422);
         }
     }
@@ -63,8 +63,8 @@ class ApiAuthController extends Controller
     public function logout (Request $request) {
         $token = $request->user()->token();
         $token->revoke();
-        $response = ['message' => 'Vous aviez été déconnecté avec succès!' , "status"=>200];
-        return response($response, 200);
+        // $response = ['message' => 'Vous aviez été déconnecté avec succès!' , "status"=>"success"];
+        return response(204);
     }
     
 

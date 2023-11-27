@@ -29,6 +29,9 @@ class ProductController extends Controller
         $products = $this->ProductRepository->getAllProducts();
         $variations_attributes = $this->ProductRepository->getProductVariationsAttributs();
         $variations_temp=[];
+
+       
+
         foreach ($variations_attributes as $key => $v_a) {
             foreach ($variations_attributes as $key_2 => $v_a_2) {
 
@@ -68,14 +71,19 @@ class ProductController extends Controller
                 };
             }
         }
+
+        // foreach ($products_temp as $key => $item) {
+        //     dd($item->variation[0]['size']['name']);
+        // }
         
-        $response = ['data' => $products_temp, 'status' => 201];
+        $response = ['status' => 'success', 'data' => $products_temp];
         return response()->json($response, 200);
     }
     
     public function show($id)
     {
-        return response()->json(Product::find($id), 201);
+        $response = [ "status" => "success" , "data" => Product::find($id)  ];
+        return response()->json($response, 201);
     }
     
     public function store(Request $request)
@@ -118,7 +126,8 @@ class ProductController extends Controller
         
         $product = Product::create($request->all());
         $product_ = $this->ProductRepository->oneProduct($product->id);
-        $response = ['product' => $product_, 'status' => 201];
+
+        $response = [ "status" => "success" , "data" => $product_  ];
         return response()->json($response, 201);
     }
     
@@ -143,7 +152,8 @@ class ProductController extends Controller
         $product = Product::find($id);
         $product->update($request->all());
         $product_ = $this->ProductRepository->oneProduct($product->id);
-        $response = ['product' => $product_, 'status' => 200];
+
+        $response = [ "status" => "success" , "data" => $product_  ];
         return response()->json($response, 200);
     }
     
@@ -151,8 +161,7 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $product->delete();
-        $response = ['product' => "", 'status' => 204];
-        return response()->json($response, 204);
+        return response()->json(204);
     }
     
     
@@ -160,7 +169,9 @@ class ProductController extends Controller
     {
         $search = $request->search;
         $products = $this->ProductRepository->searchProducts($search);
-        return response()->json($products, 200);
+
+        $response = [ "status" => "success" , "data" => $products  ];
+        return response()->json($response, 200);
     }
     
 }

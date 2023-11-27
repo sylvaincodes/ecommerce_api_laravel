@@ -20,6 +20,7 @@
         "nette/utils": "^3.2"
     },
     "require-dev": {
+        "ddelnano/dredd-hooks-php": "^2.0",
         "facade/ignition": "^2.0",
         "fakerphp/faker": "^1.9.1",
         "mockery/mockery": "^1.3.1",

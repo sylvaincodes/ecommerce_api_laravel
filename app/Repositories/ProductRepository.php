@@ -8,12 +8,26 @@ class ProductRepository
 	/**
 	* Get list of product.
 	*/
+
 	public function getAllProducts(){
 		$products =   \DB::table('products')
 		->join('product_variations', 'products.id', '=', 'product_variations.product_id')
 		->leftjoin('categories', 'products.category_id', '=', 'categories.id')
 		->leftjoin('reviews', 'products.id', '=', 'reviews.product_id')
-		->select('products.*','categories.name as category'  , \DB::raw('round(AVG(reviews.star),0) as rating') )
+		->select(
+			'products.id',
+			'products.name',
+			'products.content',
+			'products.status',
+			'products.category_id',
+			'products.brand_id',
+			'products.views',
+			'products.sale_price',
+			'products.price',
+			'products.height',
+			'products.weight',
+			'products.url',
+			'categories.name as category'  , \DB::raw('round(AVG(reviews.star),0) as rating') )
 		->where('products.status',"published")
 		->groupBy('products.id')
 		->get();
