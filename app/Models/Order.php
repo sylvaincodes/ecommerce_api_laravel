@@ -18,6 +18,7 @@ class Order extends Model
         'cart_id',
         'user_id',
         'payment_intent',
+        'amount_subtotal',
         'amount_total',
         'amount_subtotal',
         'amount_shipping',

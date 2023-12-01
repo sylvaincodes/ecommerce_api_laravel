@@ -69,12 +69,8 @@ class OrderController extends Controller
                     }
                 }
 
-                if ($collection->id) {
-                    $response = ['data' => $collection,'status' => "success"];
-                }
-                else{
-                    $response = ['message' => 'error : insert to database failed' ,'status' => "error"];
-                }
+                
+                $response = ['status' => "success", 'data' => $collection];
                 return response()->json($response, 201);
 
     }
@@ -91,7 +87,7 @@ class OrderController extends Controller
 
         $order = \DB::table('orders')
         ->where('id', $id)
-        ->update($request->only(['status','payment_status','amount_total','amount_discount','amount_shipping','amount_tax']));
+        ->update($request->only(['status','payment_status','amount_subtotal','amount_total','amount_discount','amount_shipping','amount_tax']));
         $response = ['message' => "order updated", 'status' => 'success' , 'request' => $order];
         return response()->json($response, 201);
     }

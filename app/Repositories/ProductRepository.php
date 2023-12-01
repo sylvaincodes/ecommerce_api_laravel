@@ -18,6 +18,7 @@ class ProductRepository
 			'products.id',
 			'products.name',
 			'products.content',
+			'products.description',
 			'products.status',
 			'products.category_id',
 			'products.brand_id',
@@ -47,7 +48,7 @@ class ProductRepository
 		'product_variation_attributes.*',
 		'product_attribute_items.*', 
 		'product_attributes.slug','product_variations.product_id','product_variations.stock_status',
-		'product_variations.price','product_variations.price_discount')
+		'product_variations.price','product_variations.price_discount','product_variations.url')
 		->orderBy('product_variations.product_id')
 		->get();
 		return $products;

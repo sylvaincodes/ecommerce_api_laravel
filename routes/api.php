@@ -27,6 +27,8 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::apiResource("pvariationattributes", Admin\ProductVariationAttributeController::class)->only(['index']);
     Route::apiResource("orders", Admin\OrderController::class)->only(['index','store','update','show']);
 
+    Route::post('/orders/post', 'Auth\ApiAuthController@login')->name('login.api');
+
     // Routes protégées
     Route::middleware('auth:api')->group(function () {
 

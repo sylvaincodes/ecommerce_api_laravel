@@ -12,33 +12,38 @@ class OrderRepository
 	*/
 	public function getAllOrders(){
 		$orders =   \DB::table('orders')
-       ->select('orders.*','orders_items.quantity','orders_items.price','orders_items.total','orders_items.status', 'orders_items.product_id')
-       	->join('orders_items', 'orders.id', '=', 'orders_items.order_id')
-       	// ->join('products', 'orders_items.product_id', '=', 'products.id')
-       	->groupBy('orders.id')
+		->join('orders_items', 'orders.id', '=', 'orders_items.order_id')
+       ->select('orders.*','orders_items.*')
+       	// ->groupBy('orders.id')
        ->get();
+
 	   return $orders;
 	}
 
-
-	/**
+/**
 	* Get list of orders.
 	*/
 	public function getAllOrdersGroup(){
-		$orders = Order::query()
-		->with('ordersitems')
-	 ->get();	
+		$orders = Order::all();	
+		
+		$array=[];
+		foreach ($orders as $key => $order) {
+		$id = $order->getAttributes()['id'];
+		
+		$items = \DB::table('orders_items')
+		->leftjoin('products', 'orders_items.product_id', '=', 'products.id')
+		// ->join('orders', 'orders_items.order_id', '=', 'orders.id')
+		->where('orders_items.order_id',$id)
+		->select('orders_items.*','products.name',"products.url")
+		->get();
 
-	$array=[];
-
-	 foreach ($orders as $key => $order) {
 	 	$order_data = $order->getAttributes();
-	 	$ordersitems_data = $order->getRelations()['ordersitems'];
-	 	$order_data['ordersitems'] = $ordersitems_data ; 	
+	 	$order_data['ordersitems'] = $items ; 	
 	 	array_push($array, $order_data);
-	 }
-	 	
-	   return $array;
+	}
+	return $array;
 	}
 }
+
+
 

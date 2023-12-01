@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Validator;
 use App\User;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -28,6 +29,15 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
+
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string|email|max:255',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        $password = $request['password'];
+        $request['password']=Hash::make($password);
+
         $user = User::find($id);
         $user->update($request->all());
         $response = ['user' => $user, 'status' => "success"];
